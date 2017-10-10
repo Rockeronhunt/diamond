@@ -1,0 +1,11 @@
+[Unit]
+Description=DIAMOND daemon serivce
+After=network.target
+
+[Service]
+Type=simple
+User=DIAMOND
+ExecStart=/opt/DIAMOND/DIAMONDd
+
+[Install]
+WantedBy=multi-user.target

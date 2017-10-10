@@ -1,0 +1,11 @@
+[Protocol]
+exec=DIAMOND-qt '%u'
+protocol=DIAMOND
+input=none
+output=none
+helper=true
+listing=
+reading=false
+writing=false
+makedir=false
+deleting=false

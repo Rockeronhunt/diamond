@@ -1,0 +1,2 @@
+debian/bin/DIAMONDd usr/bin
+src/DIAMONDd usr/lib/DIAMOND

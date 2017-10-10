@@ -1,0 +1,1 @@
+DIAMOND is the translated version of DIAMOND for the ZH_CN translation

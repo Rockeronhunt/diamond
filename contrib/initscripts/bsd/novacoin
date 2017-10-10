@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: DIAMOND
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# DIAMOND_enable (bool): Set to NO by default. Set this variable to YES if you want to enable DIAMOND service.
+# DIAMOND_config (path): Set to /usr/local/etc/DIAMOND.conf by default.
+# DIAMOND_user:  The user account DIAMOND daemon runs as. It uses 'root' user by default.
+# DIAMOND_group: The group account DIAMOND daemon runs as. It uses 'wheel' group by default.
+# DIAMOND_datadir (str): Default to "/var/db/DIAMOND". Base data directory.
+
+. /etc/rc.subr
+
+name=DIAMOND
+rcvar=DIAMOND_enable
+
+: ${DIAMOND_enable:=NO}
+: ${DIAMOND_config=/usr/local/etc/DIAMOND.conf}
+: ${DIAMOND_datadir=/var/db/DIAMOND}
+: ${DIAMOND_user="root"}
+: ${DIAMOND_group="wheel"}
+
+required_files=${DIAMOND_config}
+command=/usr/local/bin/DIAMONDd
+DIAMOND_chdir=${DIAMOND_datadir}
+pidfile="${DIAMOND_datadir}/DIAMONDd.pid"
+stop_cmd=DIAMOND_stop
+command_args="-conf=${DIAMOND_config} -datadir=${DIAMOND_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+DIAMOND_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${DIAMOND_datadir}
+	[ $? -eq 0 ] && chown -R ${DIAMOND_user}:${DIAMOND_group} ${DIAMOND_datadir}
+}
+
+DIAMOND_prestart()
+{
+	if [ ! -d "${DIAMOND_datadir}/." ]; then
+		DIAMOND_create_datadir || return 1
+	fi
+}
+
+DIAMOND_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+DIAMOND_stop()
+{
+    DIAMOND_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${DIAMOND_config} -datadir=${DIAMOND_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"

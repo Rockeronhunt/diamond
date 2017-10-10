@@ -1,0 +1,5 @@
+DIAMOND-qt usr/bin
+share/pixmaps/DIAMOND32.xpm usr/share/pixmaps
+share/pixmaps/DIAMOND80.xpm usr/share/pixmaps
+debian/DIAMOND-qt.desktop usr/share/applications
+debian/DIAMOND-qt.protocol usr/share/kde4/services/

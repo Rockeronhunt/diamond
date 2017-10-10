@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=DIAMOND
+Comment=DIAMOND P2P Cryptocurrency
+Comment[ru]=DIAMOND, P2P криптовалюта
+Comment[fr]=DIAMOND, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=DIAMOND, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/DIAMOND-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/DIAMOND80.xpm
+MimeType=x-scheme-handler/DIAMOND;
+Categories=Office;
